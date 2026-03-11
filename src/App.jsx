@@ -936,6 +936,7 @@ const AnalyseTab = ({data,settings,setSettings,expenses}) => {
   const allKeys2=Object.keys(data).sort();
   const exportCSV=()=>{const rows=[["Date","Conso.","Objectif","Types","Facteurs","Envie moy","Note"]];allKeys2.forEach(k=>{const d=data[k];if(d){const factors=Object.values(d.cigFactors||{}).map(f=>factorById[f]?.label).filter(Boolean).join("|");const types=Object.values(d.cigTypes||{}).join("|");const cravings=Object.values(d.cigCravings||{});const avgCr=cravings.length?(cravings.reduce((a,b)=>a+b,0)/cravings.length).toFixed(1):"";rows.push([k,d.cigs.length,d.goal,types,factors,avgCr,d.note||""]);} });const csv="\uFEFF"+rows.map(r=>r.join(";")).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="smoketrack_export.csv";a.click();};
 
+  const tC=dark?"#f0f4f2":"#5a3a30", stC=dark?"#90b8a8":"#a07868";
   const layout = (settings.layouts||DEF_LAYOUTS).analyse || DEF_LAYOUTS.analyse;
   const factorsCard = settings.showFactors&&factorStats.length>0 ? (
     <Card key="factors" dark={dark}><Lbl dark={dark}>🔍 Facteurs déclenchants</Lbl>
