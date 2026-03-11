@@ -337,7 +337,9 @@ const usePeriodFilter = (data) => {
 // ══ DRAG SORTER ═══════════════════════════════════════════════════════════════
 const CARD_LABELS = {
   counter:"🏠 Compteur", timeline:"⏱ Timeline", cigs:"🚬 Historique",
-  summary:"📊 Résumé", cost:"💸 Coût", hours:"🕐 Distribution horaire",
+  summary:"📊 Résumé", cost:"💸 Coût", hours:"🕐 Horaire",
+  evolution:"📈 Évolution", interval:"⏱ Intervalles", dow:"📅 Jour de la semaine",
+  sleep:"😴 Éveil & conso", weekcompare:"📆 Semaine N vs N-1", savings:"💰 Argent économisé",
   streak:"🔥 Série", heatmap:"🗓 Heatmap", badges:"🏅 Badges",
   factors:"🔍 Facteurs", cravings:"🌡️ Envies",
 };
@@ -415,7 +417,7 @@ const DragSorter = ({tabId, settings, setSettings, dark, allIds}) => {
   );
 };
 
-
+const BADGES = [
   {id:"first",   cat:"🚀 Premiers pas", emoji:"👣",label:"Premier pas",     check:d=>Object.keys(d).length>=1},
   {id:"week1",   cat:"🚀 Premiers pas", emoji:"📅",label:"7 jours trackés", check:d=>Object.keys(d).length>=7},
   {id:"streak3", cat:"🔥 Séries",       emoji:"🌱",label:"3 jours maîtrisés",check:d=>{let s=0;for(const k of Object.keys(d).sort().reverse()){const v=d[k];if(v&&v.cigs.length<=v.goal)s++;else break;}return s>=3;}},
@@ -966,7 +968,7 @@ const AnalyseTab = ({data,settings,setSettings,expenses}) => {
         {Object.entries(cyclePhaseStats).map(([label,{total,days:d,emoji,color}])=>(
           <div key={label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:`1px solid ${dark?"rgba(255,255,255,0.08)":"rgba(200,180,170,0.15)"}`}}>
             <div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:20}}>{emoji}</span><div><div style={{fontSize:13,fontWeight:700,color:tC}}>{label}</div><div style={{fontSize:11,color:stC}}>{d} jour{d>1?"s":""}</div></div></div>
-            <div style={{textAlign:"right"}}><div style={{fontSize:20,fontWeight:900,color}}>{d>0?(total/d).toFixed(1):0}</div><div style={{fontSize:10,color:stC}}>moy/jour</div></div>
+            <div style={{textAlign:"right"}}><div style={{fontSize:20,fontWeight:900,color:color}}>{d>0?(total/d).toFixed(1):0}</div><div style={{fontSize:10,color:stC}}>moy/jour</div></div>
           </div>
         ))}
       </Card>}
